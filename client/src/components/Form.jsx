@@ -22,6 +22,7 @@ const Form = () => {
     protein: "",
     carbs: "",
     exceptions: "",
+    meals_per_day: "",
     days: "",
   })
 
@@ -164,9 +165,24 @@ const Form = () => {
         </div>
 
         <div>
+          {/* Input for the number of meals per day */}
+          <label className='flex flex-col'>
+            <span>Meals per day</span>
+              <input
+                type='number'
+                name='meals_per_day'
+                value={form.meals_per_day}
+                onChange={handleChange}
+                placeholder='Number of meals per day e.g 2,3,5, etc.'
+                className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+            />
+          </label>
+        </div>
+
+        <div>
           {/* Input for the number of days */}
           <label className='flex flex-col'>
-            <span>Days</span>
+            <span>Plan duration</span>
               <input
                 type='number'
                 name='days'
