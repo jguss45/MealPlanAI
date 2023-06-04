@@ -26,7 +26,18 @@ const Form = () => {
     days: "",
   })
 
-  const [loading, setLoading] = useState(false); //to show user 'sending' or not after they submit
+  const prompt = isEnteringCalories ? 
+    `You are my AI meal planner and I need you to create a meal plan exactly meeting the constraints that I give you. 
+    I want a meal plan for ${form.days} with ${form.meals_per_day} meals per day. 
+    Meal plan must not include ${form.exceptions}.
+    Meal plan must match the caloric requirement of ${form.calories} calories per day` 
+    : 
+    `You are my AI meal planner and I need you to follow the constraints that I give you exactly. 
+    I want a meal plan for ${form.days} with ${form.meals_per_day} meals per day. 
+    Meal plan must not include ${form.exceptions}.
+    Meal plan must match the following macro requirements. 
+    Fat: ${form.fat} Protein: ${form.protein} Carbs: ${form.carbs}`;
+
 
   const handleChange = (e) => {
     //for updating the form anytime there is a change in the form field
@@ -195,14 +206,9 @@ const Form = () => {
         </div>
 
         <div>
-          {/* Submit form button */}
-          <button
-              type='submit'
-              className='bg-tertiary py-3 px-8 outline-none w-fit text-white font-bold shadow-md shadow-primary rounded-xl'
-              >
-              {loading ? 'Sending...' : 'Submit '}
-          </button>
+          <SubmitButton />
         </div>
+
       </form>
     </motion.div>
   )

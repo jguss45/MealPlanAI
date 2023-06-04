@@ -10,8 +10,9 @@ import state from '../store';
 import Loader from './Loader';
 import SubmitButton from './SubmitButton';
 
-
 const MealPlan = (text) => {
+  const snap = useSnapshot(state);
+
   return (
     <motion.div
       key={text}
@@ -27,7 +28,7 @@ const MealPlan = (text) => {
         variants={textVariant()}
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
       >
-        AI Meal Plan Goes Here
+        {snap.mealPlan}
         
       </motion.p>
     </motion.div>
