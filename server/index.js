@@ -19,6 +19,5 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: "Hello from GPT" })
 })
 
-
 //start server and listen on port 8080
 app.listen(8080, () => console.log("Listening on port 8080"));
