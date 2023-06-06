@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 import { useSnapshot } from 'valtio';
@@ -17,27 +17,33 @@ const Form = () => {
   const [isEnteringCalories, setIsEnteringCalories] = useState(true)
 
   const [form, setForm] = useState({
-    calories: "",
+    calories: "2500",
     fat: "",
     protein: "",
     carbs: "",
-    exceptions: "",
-    meals_per_day: "",
-    days: "",
+    exceptions: "treenuts, shellfish",
+    meals_per_day: "5",
+    days: "3",
   })
 
-  const prompt = isEnteringCalories ? 
-    `You are my AI meal planner and I need you to create a meal plan exactly meeting the constraints that I give you. 
-    I want a meal plan for ${form.days} with ${form.meals_per_day} meals per day. 
+  const [prompt, setPrompt] = useState('');
+  
+  //anytime the form or the form field inputs change, prompt will be updated.
+  useEffect(() => {
+    const newPrompt = isEnteringCalories 
+    ? 
+    `You are my AI meal planner. Create a meal plan meeting the exact constraints that I give you.
+    I want a meal plan for ${form.days} days consisting of ${form.meals_per_day} meals per day.
     Meal plan must not include ${form.exceptions}.
-    Meal plan must match the caloric requirement of ${form.calories} calories per day` 
+    Meal plan must match the caloric requirement of ${form.calories} calories per day`
     : 
-    `You are my AI meal planner and I need you to follow the constraints that I give you exactly. 
-    I want a meal plan for ${form.days} with ${form.meals_per_day} meals per day. 
+    `You are my AI meal planner. Create a meal plan meeting the exact constraints that I give you. 
+    I want a meal plan for ${form.days} days consisting of ${form.meals_per_day} meals per day.
     Meal plan must not include ${form.exceptions}.
     Meal plan must match the following macro requirements. 
     Fat: ${form.fat} Protein: ${form.protein} Carbs: ${form.carbs}`;
-
+    setPrompt(newPrompt);
+  }, [form, isEnteringCalories]);
 
   const handleChange = (e) => {
     //for updating the form anytime there is a change in the form field
@@ -69,7 +75,7 @@ const Form = () => {
       initial='hidden'
       animate='show'
       transition={{ duration: 0.3 }}
-      className='flex-[0.75] bg-black-100 p-8 rounded-2xl max-w-xl mx-auto'
+      className='flex-[0.75] bg-black-100 p-8 rounded-2xl max-w-xl ml-auto '
     >
       <p className={styles.sectionSubText}>Meal Plan Constraints</p>
       <h3 className={styles.sectionHeadText}>Your plan.</h3>
@@ -206,7 +212,7 @@ const Form = () => {
         </div>
 
         <div>
-          <SubmitButton />
+          <SubmitButton prompt={prompt}/>
         </div>
 
       </form>

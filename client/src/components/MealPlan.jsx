@@ -10,12 +10,12 @@ import state from '../store';
 import Loader from './Loader';
 import SubmitButton from './SubmitButton';
 
-const MealPlan = (text) => {
+const MealPlan = () => {
   const snap = useSnapshot(state);
 
   return (
     <motion.div
-      key={text}
+      key={state.mealPlan}
       variants={slideIn('left', 'tween', 0.2, 1)}
       initial='hidden'
       animate='show'

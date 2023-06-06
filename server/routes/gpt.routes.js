@@ -36,7 +36,7 @@ router.route('/').post(async (req, res) => {
             model: 'gpt-3.5-turbo',
             messages: [{
                 "role": "user",
-                "content": { prompt }
+                "content": prompt.prompt
             }],
             n: 1,
         });
