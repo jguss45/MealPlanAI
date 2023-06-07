@@ -3,12 +3,11 @@ import { motion } from 'framer-motion';
 
 import { useSnapshot } from 'valtio';
 
-import config from '../config/config';
 import { fadeAnimation, slideAnimation, slideIn } from '../config/motion';
 import { styles } from '../styles';
-import state from '../store';
 import Loader from './Loader';
 import SubmitButton from './SubmitButton';
+import state from '../store';
 
 
 const Form = () => {
@@ -27,7 +26,7 @@ const Form = () => {
   })
 
   const [prompt, setPrompt] = useState('');
-  
+
   //anytime the form or the form field inputs change, prompt will be updated.
   useEffect(() => {
     const newPrompt = isEnteringCalories 
@@ -67,156 +66,185 @@ const Form = () => {
   
   }
 
+  //if all fields for each entry mode aren't filled out, inform user
+  useEffect(() => {
+    // Check if all corresponding fields are filled out for each entry mode
+    let isComplete = false;
+
+    if (isEnteringCalories) {
+      isComplete =
+        form.calories !== '' &&
+        form.exceptions !== '' &&
+        form.meals_per_day !== '' &&
+        form.days !== '';
+    } else {
+      isComplete =
+        form.protein !== '' &&
+        form.fat !== '' &&
+        form.carbs !== '' &&
+        form.exceptions !== '' &&
+        form.meals_per_day !== '' &&
+        form.days !== '';
+    }
+
+    state.formCheck = isComplete;
+    console.log("checking formCheck")
+    console.log(state.formCheck)
+  }, [form, isEnteringCalories]);
 
   return (
-    <motion.div
-      key={isEnteringCalories}
-      variants={slideIn('left', 'tween', 0.2, 1)}
-      initial='hidden'
-      animate='show'
-      transition={{ duration: 0.3 }}
-      className='flex-[0.75] bg-black-100 p-8 rounded-2xl max-w-xl ml-auto '
-    >
-      <p className={styles.sectionSubText}>Meal Plan Constraints</p>
-      <h3 className={styles.sectionHeadText}>Your plan.</h3>
-      <form 
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className='mt-2 flex flex-col gap-8 max-w-md mx-auto'
-      >
-        <div className='bg-tertiary py-3 px-8 w-fit text-white font-bold rounded-xl flex gap-10'>
-          {/* Toggle whether entering calories or macros */}
-          <label className='flex gap-2'>
-            <input
-              type="radio"
-              name="entryMode"
-              value="macros"
-              checked={!isEnteringCalories}
-              onChange={() => setIsEnteringCalories(false)}
-            />
-            Macros
-          </label>
+    <div className='flex justify-end py-20 px-20'>
+      <div className='w-1/4 max-w-xl mt-20 mx-20'>
+        <motion.div
+          key={isEnteringCalories}
+          variants={slideIn('left', 'tween', 0.2, 1)}
+          initial='hidden'
+          animate='show'
+          transition={{ duration: 0.3 }}
+          className='flex-[0.75] bg-black-100 p-8 rounded-2xl max-w-xl ml-auto '
+        >
+          <p className={styles.sectionSubText}>Meal Plan Constraints</p>
+          <h3 className={styles.sectionHeadText}>Your plan.</h3>
+          <form 
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className='mt-2 flex flex-col gap-4 max-w-sm mx-auto'
+          >
+            <div className='bg-tertiary py-3 px-8 w-fit text-white font-bold rounded-xl flex gap-10'>
+              {/* Toggle whether entering calories or macros */}
+              <label className='flex gap-2'>
+                <input
+                  type="radio"
+                  name="entryMode"
+                  value="macros"
+                  checked={!isEnteringCalories}
+                  onChange={() => setIsEnteringCalories(false)}
+                />
+                Macros
+              </label>
 
-          <label className='flex gap-2'>
-            <input
-              type="radio"
-              name="entryMode"
-              value="calories"
-              checked={isEnteringCalories}
-              onChange={() => setIsEnteringCalories(true)}
-            />
-            Calories
-          </label>
-        </div>
-        <div>
-          {/* Inputs for calories, macros, etc. */}
-          {isEnteringCalories ? (
-          <label className='flex flex-col'>
-            <span>Calories</span>
-            <input
-              type='number'
-              name='calories'
-              value={form.calories}
-              onChange={handleChange}
-              placeholder='Calories per day e.g. 1950'
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
-            />
-          </label>
-          ) : (
-            <>
+              <label className='flex gap-2'>
+                <input
+                  type="radio"
+                  name="entryMode"
+                  value="calories"
+                  checked={isEnteringCalories}
+                  onChange={() => setIsEnteringCalories(true)}
+                />
+                Calories
+              </label>
+            </div>
+            <div>
+              {/* Inputs for calories, macros, etc. */}
+              {isEnteringCalories ? (
               <label className='flex flex-col'>
-                <span>Protein</span>
+                <span>Calories</span>
                 <input
                   type='number'
-                  name='protein'
-                  value={form.protein}
+                  name='calories'
+                  value={form.calories}
                   onChange={handleChange}
-                  placeholder='Protein per day in grams e.g. 120'
+                  placeholder='Calories per day e.g. 1950'
                   className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
                 />
               </label>
+              ) : (
+                <>
+                  <label className='flex flex-col'>
+                    <span>Protein</span>
+                    <input
+                      type='number'
+                      name='protein'
+                      value={form.protein}
+                      onChange={handleChange}
+                      placeholder='Protein per day in grams e.g. 120'
+                      className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+                    />
+                  </label>
 
+                  <label className='flex flex-col'>
+                    <span>Fat</span>
+                    <input
+                      type='number'
+                      name='fat'
+                      value={form.fat}
+                      onChange={handleChange}
+                      placeholder='Fat per day in grams e.g. 60'
+                      className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+
+                    />
+                  </label>
+
+                  <label className='flex flex-col'>
+                    <span>Carbs</span>
+                    <input
+                      type='number'
+                      name='carbs'
+                      value={form.carbs}
+                      onChange={handleChange}
+                      placeholder='Carbs per day in grams e.g. 300'
+                      className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+
+                    />
+                  </label>
+                </>
+              )}
+            </div>
+
+            <div>
+              {/* Inputs for excluded items */}
               <label className='flex flex-col'>
-                <span>Fat</span>
-                <input
-                  type='number'
-                  name='fat'
-                  value={form.fat}
-                  onChange={handleChange}
-                  placeholder='Fat per day in grams e.g. 60'
-                  className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+                <span>Excluded items</span>
+                  <input
+                    type='text'
+                    name='exceptions'
+                    value={form.exceptions}
+                    onChange={handleChange}
+                    placeholder='Separate items by commas, e.g. nuts, dairy, etc.'
+                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
 
+                  />
+              </label>
+            </div>
+
+            <div>
+              {/* Input for the number of meals per day */}
+              <label className='flex flex-col'>
+                <span>Meals per day</span>
+                  <input
+                    type='number'
+                    name='meals_per_day'
+                    value={form.meals_per_day}
+                    onChange={handleChange}
+                    placeholder='Number of meals per day e.g 2,3,5, etc.'
+                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
                 />
               </label>
+            </div>
 
+            <div>
+              {/* Input for the number of days */}
               <label className='flex flex-col'>
-                <span>Carbs</span>
-                <input
-                  type='number'
-                  name='carbs'
-                  value={form.carbs}
-                  onChange={handleChange}
-                  placeholder='Carbs per day in grams e.g. 300'
-                  className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
-
+                <span>Plan duration</span>
+                  <input
+                    type='number'
+                    name='days'
+                    value={form.days}
+                    onChange={handleChange}
+                    placeholder='Number of days in plan e.g 3,5,7'
+                    className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
                 />
               </label>
-            </>
-          )}
-        </div>
+            </div>
 
-        <div>
-          {/* Inputs for excluded items */}
-          <label className='flex flex-col'>
-            <span>Excluded items</span>
-              <input
-                type='text'
-                name='exceptions'
-                value={form.exceptions}
-                onChange={handleChange}
-                placeholder='Separate items by commas, e.g. nuts, dairy, etc.'
-                className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
+            <div>
+              <SubmitButton prompt={prompt} />
+            </div>
 
-              />
-          </label>
-        </div>
-
-        <div>
-          {/* Input for the number of meals per day */}
-          <label className='flex flex-col'>
-            <span>Meals per day</span>
-              <input
-                type='number'
-                name='meals_per_day'
-                value={form.meals_per_day}
-                onChange={handleChange}
-                placeholder='Number of meals per day e.g 2,3,5, etc.'
-                className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
-            />
-          </label>
-        </div>
-
-        <div>
-          {/* Input for the number of days */}
-          <label className='flex flex-col'>
-            <span>Plan duration</span>
-              <input
-                type='number'
-                name='days'
-                value={form.days}
-                onChange={handleChange}
-                placeholder='Number of days in plan e.g 3,5,7'
-                className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium'
-            />
-          </label>
-        </div>
-
-        <div>
-          <SubmitButton prompt={prompt}/>
-        </div>
-
-      </form>
-    </motion.div>
+          </form>
+        </motion.div>
+      </div>
+    </div>
   )
 }
 
