@@ -1,4 +1,6 @@
-import {Form, Footer, MealPlan } from "./components";
+import {Footer} from "./components";
+import Form from "./pages/Form";
+import MealPlan from "./pages/MealPlan";
     
 function App() {
   return (
