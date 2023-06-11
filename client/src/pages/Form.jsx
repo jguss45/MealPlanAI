@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useSnapshot } from "valtio";
 
-import { fadeAnimation, slideAnimation, slideIn } from "../config/motion";
+import { slideIn } from "../config/motion";
 import { styles } from "../styles";
 import SubmitButton from "../components/SubmitButton";
 import state from "../store";
