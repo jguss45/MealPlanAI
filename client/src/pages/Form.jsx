@@ -22,7 +22,6 @@ const Form = () => {
     carbs: "",
     exceptions: "treenuts, shellfish",
     meals_per_day: "5",
-    days: "3",
   });
 
   const [prompt, setPrompt] = useState("");
@@ -30,12 +29,14 @@ const Form = () => {
   //anytime the form or the form field inputs change, prompt will be updated.
   useEffect(() => {
     const newPrompt = isEnteringCalories
-      ? `You are my AI meal planner. Create a meal plan meeting the exact constraints that I give you.
-    I want a meal plan for ${form.days} days consisting of ${form.meals_per_day} meals per day.
+      ? `You are my AI meal planner. Create a concise meal plan meeting the exact constraints that I give you.
+    I want a meal plan for 7 days consisting of ${form.meals_per_day} meals per day.
     Meal plan must not include ${form.exceptions}.
-    Meal plan must match the caloric requirement of ${form.calories} calories per day`
-      : `You are my AI meal planner. Create a meal plan meeting the exact constraints that I give you. 
-    I want a meal plan for ${form.days} days consisting of ${form.meals_per_day} meals per day.
+    Meal plan must match the caloric requirement of ${form.calories} calories per day.
+    For each meal, specify the amount of each ingredient in grams and show total calories per meal.
+    For each day of the meal plan, start on a new line and specify each meal such as Day 1 Meal 1.`
+      : `You are my AI meal planner. Create a concise meal plan meeting the exact constraints that I give you. 
+    I want a meal plan for 7 days consisting of ${form.meals_per_day} meals per day.
     Meal plan must not include ${form.exceptions}.
     Meal plan must match the following macro requirements. 
     Fat: ${form.fat} Protein: ${form.protein} Carbs: ${form.carbs}`;
@@ -50,7 +51,6 @@ const Form = () => {
       ...form,
       [name]: value,
     });
-    console.log(form);
   };
 
   const handleSubmit = async (e) => {
@@ -72,21 +72,18 @@ const Form = () => {
       isComplete =
         form.calories !== "" &&
         form.exceptions !== "" &&
-        form.meals_per_day !== "" &&
-        form.days !== "";
+        form.meals_per_day !== "" 
     } else {
       isComplete =
         form.protein !== "" &&
         form.fat !== "" &&
         form.carbs !== "" &&
         form.exceptions !== "" &&
-        form.meals_per_day !== "" &&
-        form.days !== "";
+        form.meals_per_day !== ""
     }
 
     state.formCheck = isComplete;
-    console.log("checking formCheck");
-    console.log(state.formCheck);
+
   }, [form, isEnteringCalories]);
 
   return (
@@ -213,21 +210,6 @@ const Form = () => {
                       value={form.meals_per_day}
                       onChange={handleChange}
                       placeholder="Number of meals per day e.g 2,3,5, etc."
-                      className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
-                    />
-                  </label>
-                </div>
-
-                <div>
-                  {/* Input for the number of days */}
-                  <label className="flex flex-col">
-                    <span>Plan duration</span>
-                    <input
-                      type="number"
-                      name="days"
-                      value={form.days}
-                      onChange={handleChange}
-                      placeholder="Number of days in plan e.g 3,5,7"
                       className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
                     />
                   </label>

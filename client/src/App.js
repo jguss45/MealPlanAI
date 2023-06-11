@@ -5,7 +5,7 @@ import MealPlan from "./pages/MealPlan";
 function App() {
   return (
     <main className="relative z-0 bg-primary">
-      <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
+      <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center min-h-screen">
         <Form />
         <MealPlan />
       </div>
