@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { saveAs } from "file-saver"; // For downloading the generated PDF
 
 import { useSnapshot } from "valtio";
 
@@ -7,10 +8,25 @@ import { textVariant, slideIn } from "../config/motion";
 import { styles } from "../styles";
 import state from "../store";
 import formatMealPlanString from "../helpers/formatMealPlan";
+import generatePDF from "../helpers/downloadMealPlan";
 
 const MealPlan = () => {
   const snap = useSnapshot(state);
   const formattedMealPlan = formatMealPlanString(snap.mealPlan);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    setIsGeneratingPDF(true); // Set the flag to indicate PDF generation is in progress
+    try {
+      const pdfBytes = await generatePDF(snap.mealPlan); // Generate the PDF document
+      const blob = new Blob([pdfBytes], { type: "application/pdf" }); // Create a Blob from the PDF bytes
+      saveAs(blob, "meal_plan.pdf"); // Initiate the file download using file-saver library
+    } catch (error) {
+      console.error("Failed to generate PDF:", error);
+    } finally {
+      setIsGeneratingPDF(false); // Reset the flag after PDF generation is complete or an error occurred
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -51,6 +67,16 @@ const MealPlan = () => {
                   )}
                 </>
               ))}
+
+              <div className="mt-4">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleDownloadPDF}
+                  disabled={isGeneratingPDF}
+                >
+                  Download PDF
+                </button>
+              </div>
             </motion.div>
           </div>
         </div>
