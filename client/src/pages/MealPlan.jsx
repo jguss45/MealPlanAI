@@ -18,7 +18,8 @@ const MealPlan = () => {
   const handleDownloadPDF = async () => {
     setIsGeneratingPDF(true); // Set the flag to indicate PDF generation is in progress
     try {
-      const pdfBytes = await generatePDF(snap.mealPlan); // Generate the PDF document
+      const formattedMealPlanString = formattedMealPlan.join('\n')
+      const pdfBytes = await generatePDF(formattedMealPlanString); // Generate the PDF document
       const blob = new Blob([pdfBytes], { type: "application/pdf" }); // Create a Blob from the PDF bytes
       saveAs(blob, "meal_plan.pdf"); // Initiate the file download using file-saver library
     } catch (error) {
