@@ -22,6 +22,7 @@ const Form = () => {
     carbs: "",
     exceptions: "treenuts, shellfish",
     meals_per_day: "5",
+    preferences: "",
   });
 
   const [prompt, setPrompt] = useState("");
@@ -33,13 +34,18 @@ const Form = () => {
     I want a meal plan for 7 days consisting of ${form.meals_per_day} meals per day.
     Meal plan must not include ${form.exceptions}.
     Meal plan must match the caloric requirement of ${form.calories} calories per day.
-    For each meal, specify the amount of each ingredient in grams and show total calories per meal.
+    Meal plan should cater to following preferences: ${form.preferences}.
+    For each meal, specify the amount of each ingredient in grams and show total calories per meal and total calories per day.
     For each day of the meal plan, start on a new line and specify each meal such as Day 1 Meal 1.`
       : `You are my AI meal planner. Create a concise meal plan meeting the exact constraints that I give you. 
     I want a meal plan for 7 days consisting of ${form.meals_per_day} meals per day.
     Meal plan must not include ${form.exceptions}.
     Meal plan must match the following macro requirements. 
-    Fat: ${form.fat} Protein: ${form.protein} Carbs: ${form.carbs}`;
+    Fat: ${form.fat} Protein: ${form.protein} Carbs: ${form.carbs}
+    Meal plan should cater to following preferences: ${form.preferences}.
+    For each meal, specify the amount of each ingredient in grams and show total calories per meal and total calories per day.
+    For each day of the meal plan, start on a new line and specify each meal such as Day 1 Meal 1.`;
+    
     setPrompt(newPrompt);
   }, [form, isEnteringCalories]);
 
@@ -210,6 +216,21 @@ const Form = () => {
                       value={form.meals_per_day}
                       onChange={handleChange}
                       placeholder="Number of meals per day e.g 2,3,5, etc."
+                      className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  {/* Inputs for food preferences */}
+                  <label className="flex flex-col">
+                    <span>Food preferences (optional)</span>
+                    <input
+                      type="text"
+                      name="preferences"
+                      value={form.preferences}
+                      onChange={handleChange}
+                      placeholder="Italian, Mexican, vegetarian, etc. "
                       className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
                     />
                   </label>

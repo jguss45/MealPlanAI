@@ -30,8 +30,8 @@ const MealPlan = () => {
             >
               <p className={styles.sectionSubText}>Are you ready?</p>
               <h3 className={styles.sectionHeadText}>HERE WE GO</h3>
-              {state.mealPlan}
-              {/* {formattedMealPlan.map((dayString, index) => (
+              {/* {state.mealPlan} */}
+               {formattedMealPlan.map((dayString, index) => (
               <motion.p
                 key={index}
                 variants={textVariant()}
@@ -39,7 +39,7 @@ const MealPlan = () => {
               >
                 {dayString}
               </motion.p>
-              ))} */}
+              ))}
             </motion.div>
           </div>
         </div>

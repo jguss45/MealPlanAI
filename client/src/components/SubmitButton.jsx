@@ -39,6 +39,7 @@ const SubmitButton = (prompt) => {
         state.mealPlan = data.plan //text response to be shown to user
         state.intro = false
       } else {
+        console.log('Failed to generate meal plan:', response.status, response.statusText);
         alert('Failed to generate meal plan. Please try again')
       }
 
