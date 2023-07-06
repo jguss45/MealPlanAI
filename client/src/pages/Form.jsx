@@ -35,16 +35,18 @@ const Form = () => {
     Meal plan must not include ${form.exceptions}.
     Meal plan must match the caloric requirement of ${form.calories} calories per day.
     Meal plan should cater to following preferences: ${form.preferences}.
-    For each meal, specify the amount of each ingredient in grams and show total calories per meal and total calories per day.
-    For each day of the meal plan, start on a new line and specify each meal such as Day 1 Meal 1.`
+    Output format should be as follows:
+    For each meal, specify the amount of each ingredient in grams. Also show total calories per meal and total calories per day.
+    For each day of the meal plan, start on a new line and specify each meal such as Day 1 Meal 1, Day 1 Meal 2, etc.`
       : `You are my AI meal planner. Create a concise meal plan meeting the exact constraints that I give you. 
     I want a meal plan for 7 days consisting of ${form.meals_per_day} meals per day.
     Meal plan must not include ${form.exceptions}.
     Meal plan must match the following macro requirements. 
     Fat: ${form.fat} Protein: ${form.protein} Carbs: ${form.carbs}
     Meal plan should cater to following preferences: ${form.preferences}.
-    For each meal, specify the amount of each ingredient in grams and show total calories per meal and total calories per day.
-    For each day of the meal plan, start on a new line and specify each meal such as Day 1 Meal 1.`;
+    Output format should be as follows:
+    For each meal, specify the amount of each ingredient in grams. Also show total fat, protein, and carbs per meal and total fat, protein, and carbs per day.
+    For each day of the meal plan, start on a new line and specify each meal such as Day 1 Meal 1, Day 1 Meal 2, etc.`;
     
     setPrompt(newPrompt);
   }, [form, isEnteringCalories]);
