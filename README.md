@@ -20,7 +20,7 @@ This application was developed using the following technologies:
 
 ## Live Project
 To use MealPlanAI, check out the deployed project at:
-https://aitshirtdesigner.josephguss.com/
+https://mealplanai.josephguss.com/
 
 The backend Server routing to the openAI API is deployed using Render.com
 
