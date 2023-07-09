@@ -11,3 +11,6 @@ This application was developed using the following technologies:
 * Valtio for state management
 * Tailwind CSS
 * OpenAI's GPT-3.5-turbo API
+
+## Potential future changes
+* This application could be further improved by swapping from the GPT-3.5-turbo API to using GPT-4. GPT-4 has much more improved performance when dealing with number based calculation and would provide more consistent accurate results. 

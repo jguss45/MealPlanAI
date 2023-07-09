@@ -3,7 +3,7 @@ const config = {
     backendUrl: "http://localhost:8080/api/v1/gpt",
   },
   production: {
-    backendUrl: "",
+    backendUrl: "https://mealplanai.onrender.com/api/v1/gpt",
   },
 };
 
