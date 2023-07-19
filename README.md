@@ -1,3 +1,6 @@
+![image](https://github.com/jguss45/MealPlanAI/assets/44825277/5caf02a5-6bdc-4cdb-8224-3038f5833f83)
+
+
 # MealPlanAI
 MealPlanAI is an AI powered meal planning tool for those interested in creating a customizable meal plan in seconds that will meet your needs and food preferences. 
 
@@ -17,6 +20,7 @@ This application was developed using the following technologies:
 
 ## Live Project
 To use MealPlanAI, check out the deployed project at:
-https://aitshirtdesigner.josephguss.com/
+https://mealplanai.josephguss.com/
 
 The backend Server routing to the openAI API is deployed using Render.com
+
